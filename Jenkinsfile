@@ -9,24 +9,17 @@ pipeline {
             }
         }
 
-        stage('Install dependencies') {
-            steps {
-                echo 'Installing dependencies...'
-                sh 'pip install -r requirements.txt'
-            }
-        }
-
         stage('Lint') {
             steps {
                 echo 'Running linter...'
-                sh 'pip install flake8 && flake8 app/ --max-line-length=100'
+                sh 'docker run --rm -v $(pwd):/app -w /app python:3.12-slim sh -c "pip install flake8 --quiet && flake8 app/ --max-line-length=100"'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh 'pip install pytest && pytest tests/'
+                sh 'docker run --rm -v $(pwd):/app -w /app python:3.12-slim sh -c "pip install flask pytest --quiet && pytest tests/"'
             }
         }
 
