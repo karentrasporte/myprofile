@@ -5,9 +5,7 @@ A personal profile site built with Flask and deployed via a full CI/CD pipeline.
 🌐 **Live site:** http://188.166.253.218:4000  
 📦 **Docker Hub:** https://hub.docker.com/r/karentrasporte/my-profile
 
-<img src="https://raw.githubusercontent.com/karentrasporte/myprofile/assets/certofcompletion.png" alt="Karen Trasporte" width="150" style="border-radius: 50%"/>
-
-
+![certcomp.jpg](assets/certcomp.jpg)
 
 ---
 
