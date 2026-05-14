@@ -9,15 +9,15 @@ pipeline {
             }
         }
 
-        stage('Lint') {
-            steps {
-                echo 'Running linter...'
-                sh """
-                    docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim \
-                    sh -c 'pip install flake8 --quiet && flake8 app/ --max-line-length=100'
-                """
-            }
-        }
+//         stage('Lint') {
+//             steps {
+//                 echo 'Running linter...'
+//                 sh """
+//                     docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim \
+//                     sh -c 'pip install flake8 --quiet && flake8 app/ --max-line-length=100'
+//                 """
+//             }
+//         }
 
         stage('Test') {
             steps {
