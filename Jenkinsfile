@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Building and pushing multi-platform image...'
                 withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-credentials',
+                    credentialsId: 'dockerhub',
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
