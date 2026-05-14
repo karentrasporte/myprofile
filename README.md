@@ -2,7 +2,7 @@
 
 A personal profile site built with Flask and deployed via a full CI/CD pipeline. This project was built to learn Python and DevOps hands-on as an exercise for the Anthropic course AI Fluency: Framework and Foundations course. 
 
-🌐 **Live site:** http://188.166.253.218:4000 (Server currently turned off)
+🌐 **Live site:** http://188.166.253.218:4000 (Server currently turned off)   
 📦 **Docker Hub:** https://hub.docker.com/r/karentrasporte/my-profile
 
 ![certcomp.jpg](assets/certcomp.jpg)
