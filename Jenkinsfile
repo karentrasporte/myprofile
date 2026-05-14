@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy to Droplet') {
             steps {
                 echo 'Deploying to Digital Ocean Droplet...'
-                sshagent(['my-ssh']) {
+                sshagent(['droplet-ssh']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@${DROPLET_IP} '
                             docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
