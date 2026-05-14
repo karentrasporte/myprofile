@@ -43,12 +43,12 @@ pipeline {
                 sshagent(['droplet-ssh']) {
                     sh """
                         ssh -o StrictHostKeyChecking=no root@${DROPLET_IP} '
-                            cd /root/myprofile && \
+                            cd /root/my-profile && \
                             git pull origin main && \
-                            docker build -t myprofile:latest . && \
-                            docker stop myprofile || true && \
-                            docker rm myprofile || true && \
-                            docker run -d -p 5000:5000 --name myprofile myprofile:latest
+                            docker build -t my-profile:latest . && \
+                            docker stop my-profile || true && \
+                            docker rm my-profile || true && \
+                            docker run -d -p 4000:4000 --name my-profile my-profile:latest
                         '
                     """
                 }
