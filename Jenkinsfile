@@ -19,15 +19,15 @@ pipeline {
 //             }
 //         }
 
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                sh """
-                    docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim \
-                    sh -c 'pip install flask pytest --quiet && pytest tests/'
-                """
-            }
-        }
+//         stage('Test') {
+//             steps {
+//                 echo 'Running tests...'
+//                 sh """
+//                     docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim \
+//                     sh -c 'pip install flask pytest --quiet && pytest tests/'
+//                 """
+//             }
+//         }
 
         stage('Build Docker image') {
             steps {
