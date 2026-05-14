@@ -40,7 +40,7 @@ pipeline {
                             docker pull ${IMAGE_NAME}:${IMAGE_TAG} &&
                             docker stop my-profile || true &&
                             docker rm my-profile || true &&
-                            docker run -d -p 5000:5000 --name my-profile ${IMAGE_NAME}:${IMAGE_TAG}
+                            docker run -d -p 4000:4000 --name my-profile ${IMAGE_NAME}:${IMAGE_TAG}
                         '
                     """
                 }
