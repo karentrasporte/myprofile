@@ -9,21 +9,24 @@ pipeline {
             }
         }
 
+        stage('Install dependencies') {
+            steps {
+                echo 'Installing dependencies...'
+                sh 'pip install -r requirements.txt'
+            }
+        }
+
         stage('Lint') {
             steps {
                 echo 'Running linter...'
-                        sh """
-                        docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim sh -c 'pip install flake8 --quiet && flake8 app/ --max-line-length=100'
-                        """
+                sh 'pip install flake8 && flake8 app/ --max-line-length=100'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running tests...'
-                sh """
-                    docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim sh -c 'pip install flask pytest --quiet && pytest tests/'
-                    """
+                sh 'pip install pytest && pytest tests/'
             }
         }
 
