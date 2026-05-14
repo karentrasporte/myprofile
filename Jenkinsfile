@@ -1,6 +1,12 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKERHUB_USERNAME = 'karentrasporte'
+        IMAGE_NAME = 'karentrasporte/my-profile'
+        IMAGE_TAG = "latest"
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -9,37 +15,31 @@ pipeline {
             }
         }
 
-//         stage('Lint') {
-//             steps {
-//                 echo 'Running linter...'
-//                 sh """
-//                     docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim \
-//                     sh -c 'pip install flake8 --quiet && flake8 app/ --max-line-length=100'
-//                 """
-//             }
-//         }
-
-//         stage('Test') {
-//             steps {
-//                 echo 'Running tests...'
-//                 sh """
-//                     docker run --rm -v \$(pwd):/workspace -w /workspace python:3.12-slim \
-//                     sh -c 'pip install flask pytest --quiet && pytest tests/'
-//                 """
-//             }
-//         }
-
         stage('Build Docker image') {
             steps {
                 echo 'Building Docker image...'
-                sh 'docker build -t profile-site .'
+                sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                echo 'Pushing image to Docker Hub...'
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                }
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully!'
+            echo 'Pipeline completed successfully! Image pushed to Docker Hub.'
         }
         failure {
             echo 'Pipeline failed. Check the logs above.'
