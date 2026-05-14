@@ -4,7 +4,8 @@ pipeline {
     environment {
         DOCKERHUB_USERNAME = 'karentrasporte'
         IMAGE_NAME = 'karentrasporte/my-profile'
-        IMAGE_TAG = "latest"
+        IMAGE_TAG = 'latest'
+        DROPLET_IP = '188.166.253.218'
     }
 
     stages {
@@ -35,11 +36,29 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Droplet') {
+            steps {
+                echo 'Deploying to Digital Ocean Droplet...'
+                sshagent(['droplet-ssh']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no root@${DROPLET_IP} '
+                            cd /root/myprofile && \
+                            git pull origin main && \
+                            docker build -t myprofile:latest . && \
+                            docker stop myprofile || true && \
+                            docker rm myprofile || true && \
+                            docker run -d -p 5000:5000 --name myprofile myprofile:latest
+                        '
+                    """
+                }
+            }
+        }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully! Image pushed to Docker Hub.'
+            echo 'Pipeline completed! Site is live on Digital Ocean.'
         }
         failure {
             echo 'Pipeline failed. Check the logs above.'
